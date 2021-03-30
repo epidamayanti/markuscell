@@ -225,4 +225,19 @@
         <item name="colorControlNormal">@color/grey_40</item>
     </style>
 
+    <style name="spinnerTheme">
+        <item name="android:textColor">@color/grey_10</item>
+        <item name ="android:fontFamily">@font/lacartoone</item>
+        <item name ="android:textSize">12sp</item>
+
+    </style>
+    <style name="spinnerTheme2">
+        <item name="android:textColor">@color/colorPrimary</item>
+        <item name ="android:fontFamily">@font/lacartoone</item>
+        <item name ="android:textSize">23sp</item>
+        <item name ="android:textStyle">bold</item>
+
+
+    </style>
+
 </resources>

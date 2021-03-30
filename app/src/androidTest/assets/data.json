@@ -1,0 +1,16 @@
+{
+  "notifikasi" : [
+    {
+      "id" : 1,
+      "judul" : "Pembayaran Diterima",
+      "tanggal" : "11 Maret 2021",
+      "isi" : "Kami telah menerima pembayaran cicilan sebesar Rp. 350.000"
+    },
+    {
+      "id" : 2,
+      "judul" : "Jatuh Tempo",
+      "tanggal" : "10 Maret 2021",
+      "isi" : "Jangan lupa tagihan mu sebesar Rp. 30.000 akan jatuh tempo di tanggal 11 Maret 2021"
+    }
+  ]
+}

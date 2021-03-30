@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_margin="@dimen/spacing_xmedium"
+    android:padding="@dimen/spacing_xsmall"
+    android:background="@color/light_blue_50"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <ImageView
+        android:id="@+id/icon"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:padding="@dimen/spacing_large"
+        android:src="@drawable/notification"
+        android:contentDescription="icon_notif" />
+
+    <LinearLayout
+        android:layout_marginEnd="@dimen/spacing_medium"
+        android:layout_marginTop="@dimen/spacing_small"
+        android:layout_toEndOf="@+id/icon"
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <LinearLayout
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+            <TextView
+                android:id="@+id/textJudulNotif"
+                android:textStyle="bold"
+                android:textColor="@color/colorPrimary"
+                android:text="Pembayaran Diterima"
+                android:fontFamily="@font/lacartoone"
+                android:textAppearance="@style/TextAppearance.AppCompat.Small"
+                android:layout_width="wrap_content"
+                android:gravity="center_vertical"
+                android:layout_height="wrap_content"/>
+            <TextView
+                android:id="@+id/textTglNotif"
+                android:text="11 Maret 2021"
+                android:fontFamily="@font/lacartoone"
+                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                android:layout_width="match_parent"
+                android:gravity="right"
+                android:layout_height="wrap_content"
+                tools:ignore="RtlHardcoded" />
+        </LinearLayout>
+
+
+        <TextView
+            android:padding="@dimen/spacing_medium"
+            android:id="@+id/textNotif"
+            android:fontFamily="@font/lacartoone"
+            android:text="Pembayaran cicilan sejumlah Rp. 350.000 sudah diterima"
+            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+            android:layout_width="match_parent"
+            android:gravity="center_vertical"
+            android:layout_height="wrap_content"/>
+
+
+    </LinearLayout>
+
+
+</RelativeLayout>
