@@ -62,9 +62,7 @@ import kotlin.properties.Delegates
      private var nomorKontrak : HashMap<Int, TransaksiResponseModel> = HashMap<Int, TransaksiResponseModel>()
      private var idtransaksi = 0
      private var kodetransaksi = ""
-     private var jum_dibayar_morethan1 by Delegates.notNull<Int>()
      private var jum_dibayar by Delegates.notNull<Int>()
-     private var jum_ditagih_morethan1 by Delegates.notNull<Int>()
      private var jum_ditagih by Delegates.notNull<Int>()
      private var index_lunas = 0
      private var txt_tenor = ""
@@ -218,7 +216,9 @@ import kotlin.properties.Delegates
         Log.d("inTransaksi", ""+idtransaksi)
 
         getPayment(idtransaksi, kodetransaksi)
-        tenor.text = txt_tenor
+        //tenor.text = txt_tenor
+        getDashboard()
+
 
         if(Utils.dataProfile.sales == 1){
             icon_vip.visibility = View.VISIBLE
@@ -229,7 +229,6 @@ import kotlin.properties.Delegates
            sp_kontrak.visibility = View.VISIBLE
            tv_kontrak.visibility = View.GONE
            handleKontrak()
-           getDashboard()
            getKontrakJatuhTempo()
        }
        else{
@@ -402,7 +401,6 @@ import kotlin.properties.Delegates
 
      private fun getDashboard(){
          progressDialog.show()
-
          subscriptions.add(
                  provideService().dashboard(Utils.token_device)
                          .observeOn(AndroidSchedulers.mainThread())
@@ -586,11 +584,6 @@ import kotlin.properties.Delegates
                                 for (payment in Utils.data_payment) {
                                     if (payment.status.equals("4") || payment.status.equals("2")) {
                                         tenor_lunas++
-                                        if (!Utils.moreThanOne)
-                                            jum_dibayar = jum_dibayar + payment.debitkredit.toInt()
-                                    } else {
-                                        if (!Utils.moreThanOne)
-                                            jum_ditagih = jum_ditagih + (payment.debitkredit.toInt() + payment.denda.toInt())
                                     }
                                 }
 
@@ -606,11 +599,6 @@ import kotlin.properties.Delegates
                                     }
                                 } else {
                                     tenor.text = "" + tenor_lunas + "/" + Utils.data_payment.size + " Bulan"
-                                }
-
-                                if (!Utils.moreThanOne) {
-                                    total_tagihan.text = Utils.convertToRp("" + jum_ditagih)
-                                    total_bayar.text = Utils.convertToRp("" + jum_dibayar)
                                 }
 
                             } else {
@@ -721,6 +709,4 @@ import kotlin.properties.Delegates
              }
          }
      }
-
-
 }
