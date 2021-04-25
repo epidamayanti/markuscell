@@ -3,6 +3,7 @@
 package my.id.phyton06.markuscell.ui
 
 import android.app.AlertDialog
+import android.app.Dialog
 import android.app.ProgressDialog
 import android.content.DialogInterface
 import android.os.Bundle
@@ -32,7 +33,7 @@ import java.util.concurrent.TimeUnit
 class Login : RxBaseFragment() {
 
     lateinit var DbHelper : DbHelper
-    private lateinit var progressDialog: ProgressDialog
+    private lateinit var progressDialog: Dialog
     private lateinit var sharedPrefManager : SharedPrefManager
     private val dialogClickListener = DialogInterface.OnClickListener { dialog, which ->
         when (which) {
@@ -44,9 +45,7 @@ class Login : RxBaseFragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
-        progressDialog = ProgressDialog(context, R.style.Theme_MaterialComponents_Light_Dialog)
-        progressDialog.isIndeterminate = true
-        progressDialog.setMessage("Loading...")
+        progressDialog = Utils.progressDialog(context!! , activity!!)
 
         sharedPrefManager = SharedPrefManager(context!!)
         DbHelper = DbHelper(this.requireContext())
@@ -63,8 +62,8 @@ class Login : RxBaseFragment() {
                 return@setOnClickListener
             }
             else{
-                //validateUser(username, password)
-                val data = LoginResponseModel(1,"dina","570612","","Dina","jkt, 13 12 1996",
+                validateUser(username, password)
+               /* val data = LoginResponseModel(1,"dina","570612","","Dina","jkt, 13 12 1996",
                 "","","","08122232778","","","","jl. aaaaaaaaaaaaaaaaaaa",
                     "","","","","","","",
                 "","","","","","","","","","",
@@ -74,8 +73,8 @@ class Login : RxBaseFragment() {
                 sharedPrefManager.saveSPBoolean(SharedPrefManager.SUDAH_LOGIN, true)
                 sharedPrefManager.saveSPString(SharedPrefManager.USERNAME, username)
                 sharedPrefManager.saveSPString(SharedPrefManager.token, Utils.token_device)
-                RxBus.get().send(Utils.DASHBOARD)
-                progressDialog.dismiss()
+                RxBus.get().send(Utils.DASHBOARD)*/
+
             }
         }
     }
@@ -91,7 +90,6 @@ class Login : RxBaseFragment() {
     //fungsi validasi untuk login
     private fun validateUser(username: String, pass: String) {
         val login = LoginModel(username.toUpperCase(Locale.ROOT), pass, Utils.device_id)
-
         subscriptions.add(
             provideLoginService().userLogin(login)
                 .retry(3)
@@ -101,14 +99,18 @@ class Login : RxBaseFragment() {
                         progressDialog.dismiss()
                         DbHelper.insertUser(user.data)
                         Utils.isLogin = true
+                        Utils.token_device = user.data.token
                         sharedPrefManager.saveSPBoolean(SharedPrefManager.SUDAH_LOGIN, true)
                         sharedPrefManager.saveSPString(SharedPrefManager.USERNAME, username)
+                        sharedPrefManager.saveSPString(SharedPrefManager.pass, pass)
                         sharedPrefManager.saveSPString(SharedPrefManager.token, Utils.token_device)
+                        Utils.after_login = true
                         RxBus.get().send(Utils.DASHBOARD)
                     } else {
+                        progressDialog.dismiss()
                         val builder = AlertDialog.Builder(context)
                         builder
-                            .setMessage("Gagal login : " + user.message)
+                            .setMessage("" + user.message)
                             .setPositiveButton("OK", dialogClickListener)
                             .setCancelable(false)
                             .show()

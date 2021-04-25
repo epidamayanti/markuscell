@@ -237,7 +237,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_centerInParent="true"
-                                android:text="881882881798"
+                                android:text="6930382866"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                                 android:textColor="@color/grey_80"
                                 app:fontFamily="@font/lacartoone" />
@@ -251,24 +251,13 @@
                                 android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                                 android:textColor="@color/colorPrimary"/>
                         </RelativeLayout>
-
-
-                        <TextView
-                            android:layout_width="match_parent"
-                            android:layout_height="wrap_content"
-                            android:layout_marginLeft="@dimen/spacing_mxlarge"
-                            android:layout_marginRight="@dimen/spacing_large"
-                            android:text="Cabang : TJ. Priok"
-                            android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                            android:textColor="@color/grey_80"
-                            app:fontFamily="@font/lacartoone" />
                         <TextView
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
                             android:layout_marginLeft="@dimen/spacing_mxlarge"
                             android:layout_marginRight="@dimen/spacing_large"
                             android:layout_marginBottom="@dimen/spacing_medium"
-                            android:text="Nama Rekening : Markus Cell"
+                            android:text="Nama Rekening : LEGIYONO"
                             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                             android:textColor="@color/grey_80"
                             app:fontFamily="@font/lacartoone" />
@@ -323,7 +312,6 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:gravity="center_vertical"
-                                android:text="Rp. "
                                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                                 android:textColor="@color/grey_80"
                                 app:fontFamily="@font/lacartoone" />
@@ -333,7 +321,7 @@
                                 android:layout_width="wrap_content"
                                 android:layout_height="match_parent"
                                 android:layout_centerInParent="true"
-                                android:text="350.000"
+                                android:text="-"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                                 android:textColor="@color/grey_80"
                                 app:fontFamily="@font/lacartoone" />

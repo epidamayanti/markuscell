@@ -36,7 +36,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:maxHeight="500dp"
-            android:src="@drawable/photo_male"/>
+            android:src="@drawable/icon"/>
     </LinearLayout>
 
 

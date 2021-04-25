@@ -32,20 +32,21 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.recyclerview.widget.RecyclerView
-        android:padding="@dimen/spacing_xsmall"
-        android:layout_below="@+id/rl_toolbar"
-        android:layout_above="@+id/view6"
-        android:id="@+id/listView"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"/>
-
     <View
         android:id="@+id/view6"
         android:layout_width="match_parent"
-        android:layout_height="100dp"
+        android:layout_height="80dp"
         android:rotation="180"
         android:background="@drawable/wave"
         android:layout_alignParentBottom="true" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:padding="@dimen/spacing_xsmall"
+        android:layout_below="@+id/rl_toolbar"
+        android:id="@+id/listView"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"/>
+
+
 
 </RelativeLayout>

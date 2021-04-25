@@ -35,5 +35,6 @@ data class LoginResponseModel (
     val filesim: String,
     val created_at: String,
     val updated_at: String,
+    val sales:Int,
     val token: String
 )

@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content">
+
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        app:cardBackgroundColor="@android:color/white"
+        app:cardCornerRadius="5dp"
+        app:cardElevation="2dp"
+        android:layout_marginTop="@dimen/spacing_xmedium"
+        android:layout_marginLeft="@dimen/spacing_large"
+        android:layout_marginRight="@dimen/spacing_large"
+        app:cardUseCompatPadding="true">
+
+        <LinearLayout
+            android:id="@+id/ll_contract_row"
+            android:padding="@dimen/spacing_xmedium"
+            android:orientation="horizontal"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <RelativeLayout
+                android:layout_width="0dp"
+                android:layout_weight="0.2"
+                android:layout_height="wrap_content">
+                <TextView
+                    android:layout_marginTop="@dimen/spacing_medium"
+                    android:id="@+id/status"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lacartoone"
+                    android:gravity="center"
+                    android:text="LUNAS"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                    android:layout_alignParentStart="true"
+                    android:textColor="@color/whte"
+                    android:textStyle="bold" />
+                <ImageView
+                    android:id="@+id/icon"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:padding="@dimen/spacing_medium"
+                    android:background="@color/transparent"
+                    app:srcCompat="@drawable/ic_baseline_assignment_large"
+                    android:contentDescription="icon_notif"
+                    app:tint="@color/colorPrimary" />
+            </RelativeLayout>
+
+            <LinearLayout
+                android:id="@+id/content"
+                android:layout_marginEnd="@dimen/spacing_medium"
+                android:layout_marginTop="@dimen/spacing_small"
+                android:orientation="vertical"
+                android:layout_width="0dp"
+                android:layout_weight="0.8"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/nama"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:fontFamily="@font/lacartoone"
+                    android:gravity="center_vertical"
+                    android:text="Astri"
+                    android:layout_alignParentStart="true"
+                    android:layout_toLeftOf="@+id/status"
+                    android:textColor="@color/colorPrimary"
+                    android:textStyle="bold" />
+
+                <TextView
+                    android:padding="@dimen/spacing_medium"
+                    android:id="@+id/kontrak"
+                    android:fontFamily="@font/lacartoone"
+                    android:text="No. kontrak: 12346789876 "
+                    android:textStyle="bold"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:padding="@dimen/spacing_medium"
+                    android:id="@+id/tempo"
+                    android:fontFamily="@font/lacartoone"
+                    android:text="Jatuh Tempo: 13 Maret 2021 "
+                    android:textStyle="bold"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_height="wrap_content"/>
+
+                <TextView
+                    android:padding="@dimen/spacing_medium"
+                    android:id="@+id/bayar"
+                    android:fontFamily="@font/lacartoone"
+                    android:text="Cicilan : Rp. 150.000 "
+                    android:textStyle="bold"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                    android:layout_width="match_parent"
+                    android:gravity="center_vertical"
+                    android:layout_height="wrap_content"/>
+
+
+            </LinearLayout>
+
+            <ImageView
+                android:layout_width="0dp"
+                android:layout_height="match_parent"
+                android:layout_weight="0.1"
+                app:tint="@color/colorPrimary"
+                android:src="@drawable/ic_arrow_right" />
+        </LinearLayout>
+
+    </androidx.cardview.widget.CardView>
+
+</RelativeLayout>

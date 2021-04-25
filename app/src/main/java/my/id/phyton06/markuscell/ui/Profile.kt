@@ -18,7 +18,10 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import kotlinx.android.synthetic.main.fragment_contract_detail.*
 import kotlinx.android.synthetic.main.fragment_profile.*
+import kotlinx.android.synthetic.main.fragment_profile.nama
+import kotlinx.android.synthetic.main.fragment_profile.toolbar
 import my.id.phyton06.markuscell.R
 import my.id.phyton06.markuscell.commons.RxBaseFragment
 import my.id.phyton06.markuscell.commons.RxBus
@@ -46,6 +49,10 @@ class Profile : RxBaseFragment() {
         super.onViewCreated(view, savedInstanceState)
         (activity as AppCompatActivity?)!!.setSupportActionBar(toolbar)
         (activity as AppCompatActivity?)!!.supportActionBar!!.setDisplayHomeAsUpEnabled(true)
+        toolbar?.setNavigationOnClickListener {
+            RxBus.get().send(Utils.DASHBOARD)
+        }
+
         DbHelper = DbHelper(this.requireContext())
 
         ll_change.setOnClickListener {
@@ -80,9 +87,9 @@ class Profile : RxBaseFragment() {
     private fun initData(){
         nama.text = Utils.dataProfile.nama
         jk.text = Utils.dataProfile.jk
-        bod.text = Utils.dataProfile.ttl
-        no_telp.text = Utils.dataProfile.nohp
-        alamat.text = Utils.dataProfile.alamat
+        bod.text = if (Utils.dataProfile.ttl.equals("null")) "-" else Utils.dataProfile.ttl
+        no_telp.text = if (Utils.dataProfile.nohp.equals("null")) "-" else Utils.dataProfile.nohp
+        alamat.text = if (Utils.dataProfile.alamat.equals("null")) "-" else Utils.dataProfile.alamat
 
         username.setText(Utils.dataProfile.username)
         pass.setText(Utils.dataProfile.password)
@@ -126,7 +133,7 @@ class Profile : RxBaseFragment() {
             if (photoFile != null){
                 val photoUri =  FileProvider.getUriForFile(
                     context!!,
-                    "my.id.phyton06.markuscell.fileprovider",
+                    "my.id.phyton06.markuscell.provider",
                     photoFile
                 )
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
@@ -151,8 +158,8 @@ class Profile : RxBaseFragment() {
             try {
                 val file = File(currentPath)
                 val uri = Uri.fromFile(file)
-                Log.d("image", "" + uri)
-                path = File(getRealPathFromURI(uri).toString()).toString()
+                path = currentPath.toString()
+
                 photo.setImageURI(uri)
             }catch (e: IOException){
                 e.printStackTrace()
@@ -168,9 +175,7 @@ class Profile : RxBaseFragment() {
                 val myFile = File(getRealPathFromURI(uri).toString())
                 path = File(getRealPathFromURI(uri).toString()).toString()
                 //val myBitmap = BitmapFactory.decodeFile(myFile.getAbsolutePath())
-                val myBitmap = BitmapFactory.decodeFile("/storage/emulated/0/DCIM/Camera/P_20210318_101915.jpg")
 
-                Log.d("image", "" + myFile.getAbsolutePath())
                 photo.setImageURI(uri)
             }catch (e: IOException){
                 e.printStackTrace()

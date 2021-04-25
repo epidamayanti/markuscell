@@ -9,11 +9,14 @@ import android.graphics.BitmapFactory
 import android.graphics.Color
 import android.media.RingtoneManager
 import android.os.Build
+import android.util.Log
 import androidx.core.app.NotificationCompat
 import com.google.firebase.messaging.FirebaseMessagingService
 import com.google.firebase.messaging.RemoteMessage
 import my.id.phyton06.markuscell.R
+import my.id.phyton06.markuscell.commons.Utils
 import my.id.phyton06.markuscell.ui.MainActivity
+import my.id.phyton06.markuscell.ui.Notifikasi
 
 class MyService :  FirebaseMessagingService() {
 
@@ -21,13 +24,15 @@ class MyService :  FirebaseMessagingService() {
         super.onMessageReceived(remoteMessage)
         val notification = remoteMessage.notification
         val data = remoteMessage.data
+        Log.d("data-notif", "" + data)
+        Utils.page = "notif"
         sendNotification(notification, data)
     }
 
     private fun sendNotification(notification: RemoteMessage.Notification?, data: Map<String, String>) {
         val icon = BitmapFactory.decodeResource(resources, R.mipmap.ic_launcher)
         val intent = Intent(this, MainActivity::class.java)
-        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP)
+        intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK)
         val pendingIntent = PendingIntent.getActivity(this, 0, intent, PendingIntent.FLAG_ONE_SHOT)
         val notificationBuilder = NotificationCompat.Builder(this, "channel_id")
                 .setContentTitle(notification!!.title)

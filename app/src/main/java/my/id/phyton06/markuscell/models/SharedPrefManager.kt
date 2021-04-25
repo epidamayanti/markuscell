@@ -27,6 +27,9 @@ class SharedPrefManager(context: Context) {
     val spToken: String?
         get() = sp.getString(token, "")
 
+    val spPass: String?
+        get() = sp.getString(pass, "")
+
     init {
         sp = context.getSharedPreferences(APP, Context.MODE_PRIVATE)
         spEditor = sp.edit()
@@ -72,6 +75,7 @@ class SharedPrefManager(context: Context) {
         val USERNAME = "Username"
         val name = "name"
         val token = "token"
+        val pass = "pass"
         val SUDAH_LOGIN = "SudahLogin"
     }
 

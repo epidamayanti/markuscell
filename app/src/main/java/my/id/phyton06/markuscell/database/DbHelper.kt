@@ -71,6 +71,7 @@ class DbHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
         values.put(DBContract.UserEntry.COLUMN_CREATED_AT, user.created_at)
         values.put(DBContract.UserEntry.COLUMN_UPDATED_AT, user.updated_at)
         values.put(DBContract.UserEntry.COLUMN_TOKEN, user.token)
+        values.put(DBContract.UserEntry.COLUMN_SALES, user.sales)
         values.put(DBContract.UserEntry.COLUMN_PHOTO, "-")
 
         // Insert the new row, returning the primary key value of the new row
@@ -178,6 +179,7 @@ class DbHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
                         ""+cursor.getString(cursor.getColumnIndex(DBContract.UserEntry.COLUMN_FILE_SIM)),
                         ""+cursor.getString(cursor.getColumnIndex(DBContract.UserEntry.COLUMN_CREATED_AT)),
                         ""+cursor.getString(cursor.getColumnIndex(DBContract.UserEntry.COLUMN_UPDATED_AT)),
+                        cursor.getInt(cursor.getColumnIndex(DBContract.UserEntry.COLUMN_SALES)),
                         ""+cursor.getString(cursor.getColumnIndex(DBContract.UserEntry.COLUMN_TOKEN))
                 )
                 cursor.moveToNext()
@@ -239,7 +241,7 @@ class DbHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
 
     companion object {
         // If you change the database schema, you must increment the database version.
-        val DATABASE_VERSION = 4
+        val DATABASE_VERSION = 1
         val DATABASE_NAME = "MarkusCell.db"
 
         private val SQL_CREATE_ENTRIES_USER =
@@ -276,6 +278,7 @@ class DbHelper(context: Context) : SQLiteOpenHelper(context, DATABASE_NAME, null
                     DBContract.UserEntry.COLUMN_CREATED_AT  + " TEXT," +
                     DBContract.UserEntry.COLUMN_UPDATED_AT  + " TEXT," +
                     DBContract.UserEntry.COLUMN_TOKEN  + " TEXT," +
+                    DBContract.UserEntry.COLUMN_SALES  + " TEXT," +
                     DBContract.UserEntry.COLUMN_PHOTO  + " TEXT)"
 
         private val SQL_CREATE_ENTRIES_TRANSAKSI =

@@ -24,6 +24,8 @@
         android:layout_height="wrap_content">
 
         <LinearLayout
+            android:layout_marginTop="@dimen/spacing_xmedium"
+            android:layout_marginRight="@dimen/spacing_xmedium"
             android:orientation="horizontal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content">
@@ -40,7 +42,9 @@
             <TextView
                 android:id="@+id/textTglNotif"
                 android:text="11 Maret 2021"
+                android:textColor="@color/colorPrimary"
                 android:fontFamily="@font/lacartoone"
+                android:textStyle="bold"
                 android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                 android:layout_width="match_parent"
                 android:gravity="right"

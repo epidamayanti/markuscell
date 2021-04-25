@@ -117,10 +117,46 @@
                                 app:fontFamily="@font/lacartoone" />
 
                             <TextView
+                                android:id="@+id/noKontrak"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="@dimen/spacing_medium"
                                 android:text="123457890"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
+                                android:textColor="@color/grey_80"
+                                app:fontFamily="@font/lacartoone" />
+                        </LinearLayout>
+
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/grey_5" />
+
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="@dimen/spacing_xxlarge"
+                            android:layout_marginTop="@dimen/spacing_medium"
+                            android:gravity="center_vertical"
+                            android:orientation="vertical"
+                            android:paddingLeft="@dimen/spacing_large"
+                            android:paddingRight="@dimen/spacing_large">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_marginLeft="@dimen/spacing_medium"
+                                android:layout_marginRight="@dimen/spacing_medium"
+                                android:text="Nama"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                                android:textColor="@color/grey_40"
+                                app:fontFamily="@font/lacartoone" />
+
+                            <TextView
+                                android:id="@+id/nama"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:layout_margin="@dimen/spacing_medium"
+                                android:text="ASTRI"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                                 android:textColor="@color/grey_80"
                                 app:fontFamily="@font/lacartoone" />
@@ -150,6 +186,7 @@
                                 app:fontFamily="@font/lacartoone" />
 
                             <TextView
+                                android:id="@+id/jumPinjaman"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/spacing_medium"
@@ -185,6 +222,7 @@
                                 app:fontFamily="@font/lacartoone" />
 
                             <TextView
+                                android:id="@+id/tenor"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/spacing_medium"
@@ -220,6 +258,7 @@
                                 app:fontFamily="@font/lacartoone" />
 
                             <TextView
+                                android:id="@+id/cicilan"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/spacing_medium"
@@ -255,6 +294,7 @@
                                 app:fontFamily="@font/lacartoone" />
 
                             <TextView
+                                android:id="@+id/tempo"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/spacing_medium"
@@ -266,9 +306,12 @@
                                 app:fontFamily="@font/lacartoone" />
                         </LinearLayout>
 
+                        <View
+                            android:layout_width="match_parent"
+                            android:layout_height="1dp"
+                            android:background="@color/grey_5" />
 
                         <LinearLayout
-                            android:visibility="gone"
                             android:layout_width="match_parent"
                             android:layout_height="@dimen/spacing_xxlarge"
                             android:gravity="center_vertical"
@@ -282,16 +325,17 @@
                                 android:layout_marginLeft="@dimen/spacing_medium"
                                 android:layout_marginRight="@dimen/spacing_medium"
                                 android:fontFamily="@font/lacartoone"
-                                android:text="Jumlah Angsuran Per Bulan"
+                                android:text="Denda"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                                 android:textColor="@color/grey_40" />
 
                             <TextView
+                                android:id="@+id/denda"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/spacing_medium"
                                 android:layout_marginRight="@dimen/spacing_medium"
-                                android:text="Rp. 350.000"
+                                android:text="Rp. 50.000"
                                 android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                                 android:textColor="@color/grey_80"
                                 app:fontFamily="@font/lacartoone" />
@@ -346,6 +390,7 @@
                                 app:fontFamily="@font/lacartoone" />
 
                             <TextView
+                                android:id="@+id/namaProduct"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_margin="@dimen/spacing_medium"
@@ -379,6 +424,7 @@
                                 app:fontFamily="@font/lacartoone" />
 
                             <TextView
+                                android:id="@+id/hargaProduct"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/spacing_medium"
@@ -414,6 +460,7 @@
                                 app:fontFamily="@font/lacartoone" />
 
                             <TextView
+                                android:id="@+id/jumProduct"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
                                 android:layout_marginLeft="@dimen/spacing_medium"

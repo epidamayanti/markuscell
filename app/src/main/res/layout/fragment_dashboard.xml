@@ -29,6 +29,7 @@
                 tools:ignore="RtlHardcoded,RtlSymmetry">
 
                 <ImageView
+                    android:visibility="invisible"
                     android:id="@+id/icon_vip"
                     android:layout_width="45dp"
                     android:layout_height="45dp"
@@ -80,21 +81,89 @@
                     android:layout_marginTop="48dp"
                     android:gravity="center"
                     android:orientation="vertical"
-                    android:paddingLeft="@dimen/spacing_mlarge"
-                    android:paddingRight="@dimen/spacing_mlarge"
+                    android:paddingLeft="@dimen/spacing_medium"
+                    android:paddingRight="@dimen/spacing_medium"
                     android:paddingBottom="@dimen/spacing_middle">
 
-                    <com.mikhaellopez.circularimageview.CircularImageView
-                        android:id="@+id/photo"
-                        android:layout_width="100dp"
-                        android:layout_height="100dp"
-                        android:layout_margin="@dimen/spacing_xsmall"
-                        android:src="@drawable/photo_male"
-                        app:civ_border="true"
-                        app:civ_border_color="@color/grey_20"
-                        app:civ_border_width="3dp"
-                        app:civ_shadow="true"
-                        app:civ_shadow_radius="0" />
+                    <LinearLayout
+                        android:orientation="horizontal"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content">
+
+                        <LinearLayout
+                            android:layout_gravity="center_horizontal"
+                            android:layout_margin="@dimen/spacing_medium"
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.3"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:gravity="center"
+                                android:fontFamily="@font/lacartoone"
+                                android:textColor="@color/whte"
+                                android:textStyle="bold"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="10sp"
+                                android:text="Total Tagihan"/>
+                            <TextView
+                                android:id="@+id/total_tagihan"
+                                android:gravity="center"
+                                android:fontFamily="@font/lacartoone"
+                                android:textColor="@color/whte"
+                                android:textStyle="bold"
+                                android:textSize="14sp"
+                                android:layout_margin="@dimen/spacing_medium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="-"/>
+
+                        </LinearLayout>
+
+                        <com.mikhaellopez.circularimageview.CircularImageView
+                            android:id="@+id/photo"
+                            android:layout_width="100dp"
+                            android:layout_height="100dp"
+                            android:layout_margin="@dimen/spacing_xsmall"
+                            android:src="@drawable/icon"
+                            app:civ_border="true"
+                            app:civ_border_color="@color/grey_20"
+                            app:civ_border_width="3dp"
+                            app:civ_shadow="true"
+                            app:civ_shadow_radius="0" />
+
+                        <LinearLayout
+                            android:layout_gravity="center_horizontal"
+                            android:layout_margin="@dimen/spacing_medium"
+                            android:orientation="vertical"
+                            android:layout_width="0dp"
+                            android:layout_weight="0.3"
+                            android:layout_height="wrap_content">
+                            <TextView
+                                android:gravity="center"
+                                android:fontFamily="@font/lacartoone"
+                                android:textColor="@color/whte"
+                                android:textStyle="bold"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:textSize="10sp"
+                                android:text="Total Bayar"/>
+                            <TextView
+                                android:id="@+id/total_bayar"
+                                android:gravity="center"
+                                android:fontFamily="@font/lacartoone"
+                                android:textColor="@color/whte"
+                                android:textStyle="bold"
+                                android:textSize="14sp"
+                                android:layout_margin="@dimen/spacing_medium"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:text="-"/>
+
+                        </LinearLayout>
+
+                    </LinearLayout>
+
 
                     <TextView
                         android:id="@+id/uname"
@@ -120,7 +189,7 @@
                             android:entries="@array/kontrak"
                             android:popupBackground="@color/colorPrimary"
                             android:theme="@style/spinnerTheme"
-                            android:visibility="visible" />
+                            android:visibility="invisible" />
 
                         <TextView
                             android:id="@+id/tv_kontrak"
@@ -191,7 +260,7 @@
                                             android:layout_height="wrap_content"
                                             android:fontFamily="@font/lacartoone"
                                             android:gravity="center"
-                                            android:text="@string/dummy_tagihan"
+                                            android:text="-"
                                             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                                             android:textColor="@color/colorPrimary"
                                             android:textStyle="bold" />
@@ -241,7 +310,7 @@
                                             android:layout_height="wrap_content"
                                             android:fontFamily="@font/lacartoone"
                                             android:gravity="center"
-                                            android:text="@string/dummy_date"
+                                            android:text="-"
                                             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                                             android:textColor="@color/colorPrimary"
                                             android:textStyle="bold" />
@@ -290,7 +359,7 @@
                                             android:layout_height="wrap_content"
                                             android:fontFamily="@font/lacartoone"
                                             android:gravity="center"
-                                            android:text="@string/dummy_tenor"
+                                            android:text="-"
                                             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                                             android:textColor="@color/colorPrimary"
                                             android:textStyle="bold" />
@@ -339,7 +408,7 @@
                                             android:layout_height="wrap_content"
                                             android:fontFamily="@font/lacartoone"
                                             android:gravity="center"
-                                            android:text="@string/dummy_denda"
+                                            android:text="-"
                                             android:textAppearance="@style/TextAppearance.AppCompat.Caption"
                                             android:textColor="@color/colorPrimary"
                                             android:textStyle="bold" />
@@ -359,6 +428,65 @@
                     android:orientation="vertical"
                     android:paddingLeft="@dimen/spacing_medium"
                     android:paddingRight="@dimen/spacing_medium">
+
+                    <androidx.cardview.widget.CardView
+                        android:layout_marginBottom="@dimen/spacing_medium"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        app:cardBackgroundColor="@android:color/white"
+                        app:cardCornerRadius="2dp"
+                        app:cardElevation="2dp"
+                        app:cardUseCompatPadding="true">
+
+                        <LinearLayout
+                            android:id="@+id/kontrak_tempo"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:gravity="center"
+                            android:orientation="vertical">
+
+                            <TextView
+                                android:layout_width="match_parent"
+                                android:layout_height="match_parent"
+                                android:gravity="center"
+                                android:padding="@dimen/spacing_xmedium"
+                                android:text="KONTRAK MENDEKATI JATUH TEMPO"
+                                android:fontFamily="@font/lacartoone"
+                                android:background="@color/colorPrimary"
+                                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
+                                android:textColor="@color/black" />
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/grey_5" />
+
+                            <TextView
+                                android:id="@+id/not_found"
+                                android:visibility="gone"
+                                android:layout_width="match_parent"
+                                android:layout_height="100dp"
+                                android:text="TIDAK ADA DATA"
+                                android:fontFamily="@font/lacartoone"
+                                android:gravity="center"
+                                android:textColor="@color/colorPrimary"
+                                />
+
+                            <androidx.recyclerview.widget.RecyclerView
+                                android:id="@+id/listview"
+                                android:layout_width="match_parent"
+                                android:layout_height="100dp"
+                                android:paddingBottom="@dimen/spacing_small"
+                                android:layout_marginTop="@dimen/spacing_small">
+
+                            </androidx.recyclerview.widget.RecyclerView>
+
+                            <View
+                                android:layout_width="match_parent"
+                                android:layout_height="1dp"
+                                android:background="@color/grey_5" />
+                        </LinearLayout>
+                    </androidx.cardview.widget.CardView>
 
                     <TextView
                         android:layout_width="match_parent"
@@ -600,8 +728,15 @@
                                     android:textAppearance="@style/TextAppearance.AppCompat.Subhead"
                                     android:textColor="@color/grey_80"
                                     app:fontFamily="@font/lacartoone" />
+                                <ImageView
+                                    android:layout_width="wrap_content"
+                                    android:layout_height="match_parent"
+                                    android:background="@color/transparent"
+                                    app:srcCompat="@drawable/ic_arrow_right"
+                                    app:tint="@color/grey_40" />
 
                                 <RelativeLayout
+                                    android:visibility="gone"
                                     android:layout_width="35dp"
                                     android:layout_height="20dp">
 
@@ -620,6 +755,7 @@
                                         android:textAppearance="@style/TextAppearance.AppCompat.Body2"
                                         android:textColor="@android:color/white" />
                                 </RelativeLayout>
+
                             </LinearLayout>
 
                             <View

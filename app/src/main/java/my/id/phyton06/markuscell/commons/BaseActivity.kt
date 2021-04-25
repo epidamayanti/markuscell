@@ -30,13 +30,4 @@ open class BaseActivity: LocBaseActivity(){
         val encodedImage  = Base64.encodeToString(imageBytes, Base64.DEFAULT)
         return encodedImage
     }
-
-    fun getDateTime(): String {
-        val currentTime = DateFormat.getDateTimeInstance().format(Date())
-        currentTime.toString()
-        if (currentTime == "") {
-            Log.d("dodol","Failed to get Date & Time. Please retake a Picture!")
-        }
-        return currentTime
-    }
 }

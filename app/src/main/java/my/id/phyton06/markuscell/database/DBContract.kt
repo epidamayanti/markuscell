@@ -38,6 +38,7 @@ object DBContract {
             val COLUMN_CREATED_AT = "created_at"
             val COLUMN_UPDATED_AT = "updated_at"
             val COLUMN_TOKEN = "token"
+            val COLUMN_SALES = "sales"
             val COLUMN_PHOTO = "photo"
 
             val TABLE_TRANSAKSI = "transaksi"

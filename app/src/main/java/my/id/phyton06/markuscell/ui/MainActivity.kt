@@ -4,6 +4,7 @@ import android.annotation.SuppressLint
 import android.app.AlertDialog
 import android.content.DialogInterface
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import android.widget.Toast
 import com.google.android.gms.tasks.OnSuccessListener
@@ -11,16 +12,16 @@ import com.google.firebase.iid.FirebaseInstanceId
 import com.google.firebase.iid.InstanceIdResult
 import my.id.phyton06.markuscell.R
 import my.id.phyton06.markuscell.commons.BaseActivity
-import my.id.phyton06.markuscell.commons.RxBaseFragment
 import my.id.phyton06.markuscell.commons.RxBus
 import my.id.phyton06.markuscell.commons.Utils
 import my.id.phyton06.markuscell.database.DbHelper
 import my.id.phyton06.markuscell.models.SharedPrefManager
 import rebus.permissionutils.PermissionEnum
 import rebus.permissionutils.PermissionManager
+import java.io.File
 
 
-class MainActivity :   BaseActivity() {
+class MainActivity : BaseActivity() {
 
     private lateinit var sharedPrefManager : SharedPrefManager
     private val dialogClickListener = DialogInterface.OnClickListener { dialog, which ->
@@ -37,28 +38,46 @@ class MainActivity :   BaseActivity() {
         }
     }
 
+    private fun getNotif() {
+        val bundle = intent.extras
+        if (intent.extras != null) {
+            for (key in intent.extras!!.keySet()) {
+                val value = intent.extras!![key]
+                Log.d("Notif : ", "Key: $key Value: $value")
+            }
+        }
+    }
+
     @SuppressLint("StringFormatInvalid")
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
         FirebaseInstanceId.getInstance().instanceId.addOnSuccessListener(this,
-            OnSuccessListener<InstanceIdResult> { instanceIdResult ->
-                val newToken = instanceIdResult.token
-                Log.e("Token", newToken)
-                Utils.device_id = newToken
-            })
+                OnSuccessListener<InstanceIdResult> { instanceIdResult ->
+                    val newToken = instanceIdResult.token
+                    Log.d("Token", newToken)
+                    Utils.device_id = newToken
+                })
 
         sharedPrefManager = SharedPrefManager(this)
         val dbHelper = DbHelper(this)
+        try {
+            val FOLDER = Environment.getExternalStoragePublicDirectory(Environment.DIRECTORY_DOWNLOADS).toString() + File.separator
+            var process = Runtime.getRuntime().exec("logcat -d")
+            process = Runtime.getRuntime().exec("logcat -f " + FOLDER + "MCK_Log_Error.txt")
+        } catch (e: Exception) {
+            e.printStackTrace()
+        }
 
+        getNotif()
         if (savedInstanceState == null) {
             manageSubscription()
             Utils.mActivity = this
             //changeFragment(Login(), false, Utils.LOGIN)
             if (sharedPrefManager.spSudahLogin!!) {
-                Utils.isLogin = false
-                sharedPrefManager.saveSPBoolean(SharedPrefManager.SUDAH_LOGIN, false)
+                Utils.isLogin = true
+                Utils.token_device = sharedPrefManager.spToken.toString()
                 changeFragment(Dashboard(), false, Utils.DASHBOARD)
             } else {
                 Utils.isLogin = false
@@ -66,14 +85,16 @@ class MainActivity :   BaseActivity() {
             }
         }
         permission()
+
+
     }
 
     // fungsi untuk subcriber event
     private fun manageSubscription() {
         subscriptions.add(
-            RxBus.get().toObservable().subscribe(
-                { event -> manageBus(event) },
-                { Toast.makeText(this, "Timeout", Toast.LENGTH_SHORT).show() })
+                RxBus.get().toObservable().subscribe(
+                        { event -> manageBus(event) },
+                        { Toast.makeText(this, "Timeout", Toast.LENGTH_SHORT).show() })
         )
     }
 
@@ -94,11 +115,11 @@ class MainActivity :   BaseActivity() {
     fun permission(){
         PermissionManager.Builder()
             .permission(
-                PermissionEnum.WRITE_EXTERNAL_STORAGE,
-                PermissionEnum.ACCESS_FINE_LOCATION,
-                PermissionEnum.ACCESS_COARSE_LOCATION,
-                PermissionEnum.READ_PHONE_STATE,
-                PermissionEnum.CAMERA)
+                    PermissionEnum.WRITE_EXTERNAL_STORAGE,
+                    PermissionEnum.ACCESS_FINE_LOCATION,
+                    PermissionEnum.ACCESS_COARSE_LOCATION,
+                    PermissionEnum.READ_PHONE_STATE,
+                    PermissionEnum.CAMERA)
             .askAgain(false)
             .ask(this)
     }
@@ -106,36 +127,46 @@ class MainActivity :   BaseActivity() {
     override fun onBackPressed() {
 
         when (supportFragmentManager.fragments.last()){
-            is Dashboard ->{
+            is Dashboard -> {
                 val builder = AlertDialog.Builder(this)
                 builder.setMessage("Keluar aplikasi ? ")
-                    .setPositiveButton("YES", dialogClickListener)
-                    .setNegativeButton("NO", dialogClickListener)
-                    .setCancelable(false).show()
+                        .setPositiveButton("YES", dialogClickListener)
+                        .setNegativeButton("NO", dialogClickListener)
+                        .setCancelable(false).show()
             }
             is Login -> {
                 val builder = AlertDialog.Builder(this)
                 builder.setMessage("Keluar aplikasi ? ")
-                    .setPositiveButton("YES", dialogClickListener)
-                    .setNegativeButton("NO", dialogClickListener)
-                    .setCancelable(false).show()
+                        .setPositiveButton("YES", dialogClickListener)
+                        .setNegativeButton("NO", dialogClickListener)
+                        .setCancelable(false).show()
             }
             is Profile -> {
                 changeFragment(Dashboard(), false, Utils.DASHBOARD)
             }
             is Payment -> {
-                changeFragment(Dashboard(), false, Utils.DASHBOARD)
+                if (Utils.moreThanOne && !Utils.isDashboard)
+                    changeFragment(Contract(), false, Utils.CONTRACT)
+                else
+                    changeFragment(Dashboard(), false, Utils.DASHBOARD)
             }
             is PaymentInfo -> {
                 changeFragment(Payment(), false, Utils.PAYMENT)
             }
             is ContractDetail -> {
+                if (Utils.moreThanOne)
+                    changeFragment(Contract(), false, Utils.CONTRACT)
+                else
+                    changeFragment(Dashboard(), false, Utils.DASHBOARD)
+            }
+            is Contract -> {
                 changeFragment(Dashboard(), false, Utils.DASHBOARD)
             }
-            is Notifikasi ->{
+            is Notifikasi -> {
+                Utils.page = ""
                 changeFragment(Dashboard(), false, Utils.DASHBOARD)
             }
-            is About ->{
+            is About -> {
                 changeFragment(Dashboard(), false, Utils.DASHBOARD)
             }
         }

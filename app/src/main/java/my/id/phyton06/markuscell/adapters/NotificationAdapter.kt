@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import kotlinx.android.extensions.LayoutContainer
 import kotlinx.android.synthetic.main.fragment_notifikasi_row.view.*
 import my.id.phyton06.markuscell.R.layout.fragment_notifikasi_row
+import my.id.phyton06.markuscell.commons.Utils
 import my.id.phyton06.markuscell.models.NotificationModel
 
 /**
@@ -31,9 +32,9 @@ class NotificationAdapter(private val context: Context, private val items: List<
             LayoutContainer {
 
         fun bindItem(items: NotificationModel) {
-            containerView.textJudulNotif.text = items.title
-            containerView.textNotif.text = items.content
-            containerView.textTglNotif.text = items.date
+            containerView.textJudulNotif.text = ""
+            containerView.textNotif.text = items.message
+            containerView.textTglNotif.text = Utils.dateConvert(items.created_at.replace("T", " ").substring(0,19))
         }
     }
 }

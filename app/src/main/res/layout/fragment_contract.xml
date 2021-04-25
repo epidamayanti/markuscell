@@ -31,146 +31,7 @@
 
     </com.google.android.material.appbar.AppBarLayout>
 
-    <androidx.cardview.widget.CardView
-        android:id="@+id/dummy1"
-        android:layout_below="@id/rl_toolbar"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardBackgroundColor="@android:color/white"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="2dp"
-        android:layout_margin="@dimen/spacing_large"
-        app:cardUseCompatPadding="true">
 
-    <LinearLayout
-        android:padding="@dimen/spacing_xmedium"
-        android:orientation="horizontal"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content">
-
-        <ImageView
-            android:id="@+id/icon"
-            android:layout_width="0dp"
-            android:layout_weight="0.2"
-            android:layout_height="wrap_content"
-            android:padding="@dimen/spacing_medium"
-            android:background="@color/transparent"
-            app:srcCompat="@drawable/ic_baseline_assignment_large"
-            android:contentDescription="icon_notif"
-            app:tint="@color/colorPrimary" />
-
-        <LinearLayout
-            android:id="@+id/content"
-            android:layout_marginEnd="@dimen/spacing_medium"
-            android:layout_marginTop="@dimen/spacing_small"
-            android:orientation="vertical"
-            android:layout_width="0dp"
-            android:layout_weight="0.8"
-            android:layout_height="match_parent">
-
-
-            <TextView
-                android:id="@+id/textJudulNotif"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:fontFamily="@font/lacartoone"
-                android:gravity="center_vertical"
-                android:text="No. 1234567890"
-                android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                android:textColor="@color/colorPrimary"
-                android:textStyle="bold" />
-
-            <TextView
-                android:padding="@dimen/spacing_medium"
-                android:id="@+id/textNotif"
-                android:fontFamily="@font/lacartoone"
-                android:text="Jatuh Tempo: 13 Maret 2021 "
-                android:textStyle="bold"
-                android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                android:layout_width="match_parent"
-                android:gravity="center_vertical"
-                android:layout_height="match_parent"/>
-
-
-        </LinearLayout>
-
-        <ImageView
-            android:layout_width="0dp"
-            android:layout_height="match_parent"
-            android:layout_weight="0.1"
-            app:tint="@color/colorPrimary"
-            android:src="@drawable/ic_arrow_right" />
-    </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
-
-    <androidx.cardview.widget.CardView
-        android:layout_below="@id/dummy1"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        app:cardBackgroundColor="@android:color/white"
-        app:cardCornerRadius="5dp"
-        app:cardElevation="2dp"
-        android:layout_marginStart="@dimen/spacing_large"
-        android:layout_marginEnd="@dimen/spacing_large"
-        app:cardUseCompatPadding="true">
-
-        <LinearLayout
-            android:padding="@dimen/spacing_xmedium"
-            android:orientation="horizontal"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content">
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_weight="0.2"
-                android:layout_height="wrap_content"
-                android:padding="@dimen/spacing_medium"
-                android:background="@color/transparent"
-                app:srcCompat="@drawable/ic_baseline_assignment_large"
-                android:contentDescription="icon_notif"
-                app:tint="@color/colorPrimary" />
-
-            <LinearLayout
-                android:layout_marginEnd="@dimen/spacing_medium"
-                android:layout_marginTop="@dimen/spacing_small"
-                android:orientation="vertical"
-                android:layout_width="0dp"
-                android:layout_weight="0.8"
-                android:layout_height="match_parent">
-
-                <TextView
-                    android:textStyle="bold"
-                    android:textColor="@color/colorPrimary"
-                    android:text="No. 12345678"
-                    android:fontFamily="@font/lacartoone"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Medium"
-                    android:layout_width="wrap_content"
-                    android:gravity="center_vertical"
-                    android:layout_height="wrap_content"/>
-
-
-                <TextView
-                    android:padding="@dimen/spacing_medium"
-                    android:fontFamily="@font/lacartoone"
-                    android:text="Jatuh Tempo : 213233524"
-                    android:textStyle="bold"
-                    android:textAppearance="@style/TextAppearance.AppCompat.Caption"
-                    android:layout_width="match_parent"
-                    android:gravity="center_vertical"
-                    android:layout_height="match_parent"/>
-
-            </LinearLayout>
-
-            <ImageView
-                android:layout_width="0dp"
-                android:layout_height="match_parent"
-                android:layout_weight="0.1"
-                app:tint="@color/colorPrimary"
-                android:src="@drawable/ic_arrow_right" />
-        </LinearLayout>
-
-    </androidx.cardview.widget.CardView>
 
     <View
         android:id="@+id/view5"
@@ -182,5 +43,13 @@
         android:layout_marginBottom="0dp"
         android:background="@drawable/wave"
         android:rotation="45" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/listView"
+        android:layout_below="@id/rl_toolbar"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+    </androidx.recyclerview.widget.RecyclerView>
+
 
 </RelativeLayout>

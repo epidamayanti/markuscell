@@ -37,6 +37,7 @@ open class LocBaseActivity: RxBaseActivity(), GoogleApiClient.ConnectionCallback
         PermissionManager.Builder()
             .permission(
                 PermissionEnum.WRITE_EXTERNAL_STORAGE,
+                PermissionEnum.READ_EXTERNAL_STORAGE,
                 PermissionEnum.ACCESS_FINE_LOCATION,
                 PermissionEnum.ACCESS_COARSE_LOCATION,
                 PermissionEnum.READ_PHONE_STATE,

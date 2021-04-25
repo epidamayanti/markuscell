@@ -3,10 +3,8 @@ package my.id.phyton06.markuscell.ui
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.app.AlertDialog
-import android.content.ClipData
-import android.content.ClipboardManager
-import android.content.Context
-import android.content.Intent
+import android.app.Dialog
+import android.content.*
 import android.database.Cursor
 import android.graphics.Bitmap
 import android.graphics.BitmapFactory
@@ -21,18 +19,31 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.content.FileProvider
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import kotlinx.android.synthetic.main.dialog_seen_photo.view.*
+import kotlinx.android.synthetic.main.fragment_dashboard.*
 import kotlinx.android.synthetic.main.fragment_payment_info.*
 import kotlinx.android.synthetic.main.fragment_profile.*
+import kotlinx.android.synthetic.main.fragment_profile.photo
+import my.id.phyton06.markuscell.BuildConfig
 import my.id.phyton06.markuscell.R
 import my.id.phyton06.markuscell.commons.RxBaseFragment
+import my.id.phyton06.markuscell.commons.RxBus
 import my.id.phyton06.markuscell.commons.Utils
 import my.id.phyton06.markuscell.database.DbHelper
+import my.id.phyton06.markuscell.models.UploadModel
+import my.id.phyton06.markuscell.services.ServiceApi
+import okhttp3.OkHttpClient
+import retrofit2.Retrofit
+import retrofit2.adapter.rxjava2.RxJava2CallAdapterFactory
+import retrofit2.converter.gson.GsonConverterFactory
 import java.io.ByteArrayOutputStream
 import java.io.File
 import java.io.IOException
 import java.text.SimpleDateFormat
 import java.util.*
+import java.util.concurrent.TimeUnit
 
 class PaymentInfo : RxBaseFragment() {
 
@@ -42,6 +53,20 @@ class PaymentInfo : RxBaseFragment() {
     private lateinit var uri: Uri
     lateinit var DbHelper : DbHelper
     var path = ""
+    private var bpImg = ""
+
+    private lateinit var progressDialog: Dialog
+    private val dialogClickListener = DialogInterface.OnClickListener { dialog, which ->
+        when (which) {
+            DialogInterface.BUTTON_POSITIVE -> {
+                dialog.dismiss()
+                RxBus.get().send(Utils.DASHBOARD)
+            }
+            DialogInterface.BUTTON_NEGATIVE -> {
+                dialog.dismiss()
+            }
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -58,6 +83,9 @@ class PaymentInfo : RxBaseFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         DbHelper = DbHelper(this.requireContext())
+        progressDialog = Utils.sendDialog(context!!, activity!!)
+
+        nominal.text = Utils.convertToRp(Utils.tagihan_payment)
 
         bukti_tf.setOnClickListener {
             showPictureDialog()
@@ -73,7 +101,7 @@ class PaymentInfo : RxBaseFragment() {
         copy_nom.setOnClickListener {
             val clipboard =
                 context!!.getSystemService(Context.CLIPBOARD_SERVICE) as ClipboardManager
-            val clip = ClipData.newPlainText("Copied Text", norek.text.toString())
+            val clip = ClipData.newPlainText("Copied Text", Utils.tagihan_payment.toString())
             clipboard.setPrimaryClip(clip)
             Toast.makeText(context, "Berhasil tersalin", Toast.LENGTH_SHORT).show()
         }
@@ -96,16 +124,45 @@ class PaymentInfo : RxBaseFragment() {
                 val myBitmap = BitmapFactory.decodeFile(DbHelper.readTransaksi())
                 photo.setImageBitmap(myBitmap)
             }
-        }
-        catch (e : RuntimeException){
-            //Toast.makeText(this, "EROR bos!", Toast.LENGTH_LONG).show()
+        } catch (e : RuntimeException){
+            val builder = AlertDialog.Builder(context)
+            builder.setMessage("ERROR "+e.localizedMessage)
+                    .setNegativeButton("OK", DialogInterface.OnClickListener { dialog, which ->
+                        when (which) {
+                            DialogInterface.BUTTON_POSITIVE -> {
+                                dialog.dismiss()
+                            }
+                            DialogInterface.BUTTON_NEGATIVE -> {
+                                dialog.dismiss()
+                            }
+                        }
+                    })
+                    .setCancelable(false)
+                    .show()
         }
 
         sendTf.setOnClickListener {
-            if(DbHelper.readTransaksi().isNotEmpty())
-                DbHelper.updatePhotoTransaksi(path)
-            else
-                DbHelper.insertTransaksi(path)
+            progressDialog.show()
+            if(bpImg.isEmpty()){
+                progressDialog.dismiss()
+                val builder = AlertDialog.Builder(context)
+                builder.setMessage("Gambar tidak boleh kosong")
+                        .setNegativeButton("OK", DialogInterface.OnClickListener { dialog, which ->
+                            when (which) {
+                                DialogInterface.BUTTON_POSITIVE -> {
+                                    dialog.dismiss()
+                                }
+                                DialogInterface.BUTTON_NEGATIVE -> {
+                                    dialog.dismiss()
+                                }
+                            }
+                        })
+                        .setCancelable(false)
+                        .show()
+            }
+            else{
+                uploadImage(Utils.tagihan_id, bpImg)
+            }
         }
     }
 
@@ -121,6 +178,7 @@ class PaymentInfo : RxBaseFragment() {
         }
         pictureDialog.show()
     }
+
     private fun choosePhotoFromGallery() {
         seen.visibility = View.VISIBLE
         val galleryIntent = Intent(
@@ -146,7 +204,7 @@ class PaymentInfo : RxBaseFragment() {
             if (photoFile != null){
                 val photoUri =  FileProvider.getUriForFile(
                     context!!,
-                    "my.id.phyton06.markuscell.fileprovider",
+                        BuildConfig.APPLICATION_ID + ".provider",
                     photoFile
                 )
                 intent.putExtra(MediaStore.EXTRA_OUTPUT, photoUri)
@@ -155,16 +213,14 @@ class PaymentInfo : RxBaseFragment() {
         }
     }
 
+
     @SuppressLint("SimpleDateFormat")
     private  fun createImage(): File{
         val imageDate =  SimpleDateFormat("ddMMyyHHmmss").format(Date())
-        val imageName = Utils.imageName+"_"+imageDate
+        val imageName = "MCKAPP"+"_"+imageDate
         val storageDir = context!!.getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         val image = File.createTempFile(imageName, ".jpg", storageDir)
         currentPath = image.absolutePath
-        Utils.arrayImagePath = currentPath.toString()
-        Utils.arrayImageData?.img_path = currentPath.toString()
-        Utils.arrayImageData?.img_name = imageName+".jpg"
         return image
     }
 
@@ -172,11 +228,9 @@ class PaymentInfo : RxBaseFragment() {
     override fun onActivityResult(requestCode: Int, resultCode: Int, data: Intent?) {
         if (requestCode == CAMERA && resultCode == Activity.RESULT_OK){
             try {
-                val file = File(currentPath)
-                uri = Uri.fromFile(file)
-                Log.d("image", "" + uri)
-                path = File(getRealPathFromURI(uri).toString()).toString()
-                bukti_tf.setImageURI(uri)
+                val myBitmap = BitmapFactory.decodeFile(currentPath)
+                bpImg = "data:image/jpeg;base64," + getStringImage(myBitmap)
+                bukti_tf.setImageBitmap(myBitmap)
             }catch (e: IOException){
                 e.printStackTrace()
             }
@@ -185,17 +239,13 @@ class PaymentInfo : RxBaseFragment() {
         if (requestCode == GALLERY && resultCode == Activity.RESULT_OK){
             try {
                 uri = data!!.data!!
-                val imageDate =  SimpleDateFormat("ddMMyyHHmmss").format(Date())
-                val imageName = Utils.imageName+"_"+imageDate
-
-                val myFile = File(getRealPathFromURI(uri).toString())
                 path = File(getRealPathFromURI(uri).toString()).toString()
-                //val myBitmap = BitmapFactory.decodeFile(myFile.getAbsolutePath())
-                val myBitmap = BitmapFactory.decodeFile("/storage/emulated/0/DCIM/Camera/P_20210318_101915.jpg")
 
-                Log.d("image", "" + myFile.getAbsolutePath())
+                val myBitmap = BitmapFactory.decodeFile(path)
+                bpImg = "data:image/jpeg;base64," + getStringImage(myBitmap)
+
                 bukti_tf.setImageURI(uri)
-            }catch (e: IOException){
+            } catch (e: IOException){
                 e.printStackTrace()
             }
         }
@@ -224,4 +274,56 @@ class PaymentInfo : RxBaseFragment() {
         return encodedImage
     }
 
+    private fun uploadImage(idPayment: String, image:String){
+        val dataUpload = UploadModel(idPayment.toInt(), image)
+        subscriptions.add(
+                provideService().upload(Utils.token_device, dataUpload)
+                        .retry(3)
+                        .observeOn(AndroidSchedulers.mainThread())
+                        .subscribe({ user ->
+                            progressDialog.dismiss()
+
+                            if (user.responsecode == 200) {
+                                val builder = AlertDialog.Builder(context)
+                                builder
+                                        .setMessage("" + user.message)
+                                        .setPositiveButton("OK", dialogClickListener)
+                                        .setCancelable(false)
+                                        .show()
+                            } else {
+                                val builder = AlertDialog.Builder(context)
+                                builder
+                                        .setMessage("Gagal mengupload data error code : " + user.message)
+                                        .setNegativeButton("OK", dialogClickListener)
+                                        .setCancelable(false)
+                                        .show()
+                            }
+
+                        }, { err ->
+                            progressDialog.dismiss()
+                            val builder = AlertDialog.Builder(context)
+                            builder.setMessage("Gagal mengupload data : " + err.localizedMessage)
+                                    .setNegativeButton("OK", dialogClickListener)
+                                    .setCancelable(false)
+                                    .show()
+                        })
+        )
+    }
+
+    private fun provideService() : ServiceApi {
+        val clientBuilder : OkHttpClient.Builder = Utils.buildClient()
+        val retrofit = Retrofit.Builder()
+                .baseUrl(Utils.ENDPOINT)
+                .client(
+                        clientBuilder
+                                .connectTimeout(10, TimeUnit.SECONDS)
+                                .writeTimeout(10, TimeUnit.SECONDS)
+                                .readTimeout(10, TimeUnit.SECONDS)
+                                .build()
+                )
+                .addConverterFactory(GsonConverterFactory.create())
+                .addCallAdapterFactory(RxJava2CallAdapterFactory.createWithScheduler(Schedulers.io()))
+                .build()
+        return retrofit.create(ServiceApi::class.java)
+    }
 }
