@@ -108,6 +108,7 @@ class MainActivity : BaseActivity() {
             Utils.PAYMENT_INFO -> changeFragment(PaymentInfo(), false, Utils.PAYMENT_INFO)
             Utils.CONTRACT -> changeFragment(Contract(), false, Utils.CONTRACT)
             Utils.CONTRACT_DETAIL -> changeFragment(ContractDetail(), false, Utils.CONTRACT_DETAIL)
+            Utils.CONTRACT_DUE_DATE -> changeFragment(ContractDueDate(), false, Utils.CONTRACT_DUE_DATE)
             Utils.ABOUT -> changeFragment(About(), false, Utils.ABOUT)
         }
     }
@@ -147,6 +148,10 @@ class MainActivity : BaseActivity() {
             is Payment -> {
                 if (Utils.moreThanOne && !Utils.isDashboard)
                     changeFragment(Contract(), false, Utils.CONTRACT)
+                else if (Utils.isContractDueDate) {
+                    Utils.isContractDueDate = false
+                    changeFragment(ContractDueDate(), false, Utils.CONTRACT_DUE_DATE)
+                }
                 else
                     changeFragment(Dashboard(), false, Utils.DASHBOARD)
             }
@@ -160,6 +165,9 @@ class MainActivity : BaseActivity() {
                     changeFragment(Dashboard(), false, Utils.DASHBOARD)
             }
             is Contract -> {
+                changeFragment(Dashboard(), false, Utils.DASHBOARD)
+            }
+            is ContractDueDate -> {
                 changeFragment(Dashboard(), false, Utils.DASHBOARD)
             }
             is Notifikasi -> {

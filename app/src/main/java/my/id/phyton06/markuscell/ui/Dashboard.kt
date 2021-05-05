@@ -100,6 +100,9 @@ import kotlin.properties.Delegates
         }
 
 
+        icon_view.setOnClickListener {
+            RxBus.get().send(Utils.CONTRACT_DUE_DATE)
+        }
         rl_personal.setOnClickListener {
             personal.setTextColor(Color.WHITE)
             rl_personal.setBackgroundColor(Color.rgb(163, 197, 255))
@@ -366,7 +369,7 @@ import kotlin.properties.Delegates
                                                     "" + nomorKontrak.get(payment.idTransaksi)?.kodetransaksi,
                                                     "Angsuran ke-" + payment.jumlah,
                                                     "" + Utils.convertToRp("" + payment.debitkredit),
-                                                    "" + Utils.dateConvert(payment.jatuhtempo)))
+                                                    "" +payment.jatuhtempo))
                                         }
                                     }
                                 }

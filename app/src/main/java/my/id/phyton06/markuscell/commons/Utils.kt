@@ -62,6 +62,7 @@ class Utils {
         val CONTRACT = "contract"
         val CONTRACT_DETAIL = "contract_detail"
         val ABOUT = "about"
+        val CONTRACT_DUE_DATE = "contract_due_date"
 
         //statement
         var isLogin = false
@@ -84,6 +85,7 @@ class Utils {
         var moreThanOne = false
         var page = ""
         var isDashboard = false
+        var isContractDueDate = false
         lateinit var transaksi : TransaksiResponseModel
         var COUNT_DIALOG = 0
         var COUNT_DIALOG_2 = 0

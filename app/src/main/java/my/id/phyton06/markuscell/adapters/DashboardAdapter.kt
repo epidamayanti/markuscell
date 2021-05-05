@@ -40,7 +40,7 @@ class DashboardAdapter(private val context: Context, private val items: List<Kon
             containerView.row_member.text = items.nama_member
             containerView.row_angsuran.text = items.no_angsuran
             containerView.row_cicilan.text = items.cicilan
-            containerView.row_jatuh_tempo.text = items.jatuh_tempo
+            containerView.row_jatuh_tempo.text = Utils.dateConvert(items.jatuh_tempo)
             containerView.setOnClickListener { listener(items) }
         }
     }

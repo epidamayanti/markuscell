@@ -56,6 +56,10 @@ class Payment : RxBaseFragment() {
         toolbar?.setNavigationOnClickListener {
             if(Utils.moreThanOne && !Utils.isDashboard)
                 RxBus.get().send(Utils.CONTRACT)
+            else if (Utils.isContractDueDate){
+                Utils.isContractDueDate = false
+                RxBus.get().send(Utils.CONTRACT_DUE_DATE)
+            }
             else
                 RxBus.get().send(Utils.DASHBOARD)
         }
